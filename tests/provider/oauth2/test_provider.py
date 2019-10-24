@@ -148,7 +148,9 @@ def test_password_wrong_password(client, clientmodel):
         'client_id': c.client_id,
         'client_secret': c.client_secret,
     })
-    assert resp.status == falcon.HTTP_401
+    # since oauthlib ref commit a4f39fc93ca2cb3b14eb 
+    # any invalid grant should return 400
+    assert resp.status == falcon.HTTP_400
 
 
 @attach_user
@@ -161,7 +163,7 @@ def test_password_wrong_username(client, clientmodel):
         'client_id': c.client_id,
         'client_secret': c.client_secret,
     })
-    assert resp.status == falcon.HTTP_401
+    assert resp.status == falcon.HTTP_400
 
 
 @attach_user
